@@ -12,8 +12,8 @@ public class InMemoryUserService {
     public InMemoryUserService(PasswordEncoder encoder) {
         this.encoder = encoder;
         this.users = Map.of(
-            "student", encoder.encode("student123"),
-            "assistant", encoder.encode("assistant123")
+            "oscar", encoder.encode("oscar123"),
+            "admin", encoder.encode("admin")
         );
     }
 
