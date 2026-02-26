@@ -122,6 +122,9 @@ src/main/resources/
    [📄 Ver documentación (PDF)](doc/punto3.pdf)
 
 4. Modificar el tiempo de expiración del token y observar el efecto.
+
+   [📄 Ver documentación (PDF)](doc/punto4.pdf)
+
 5. Documentar en Swagger los endpoints de autenticación y de negocio.
 
 ---

@@ -36,4 +36,4 @@ management:
 blueprints:
   security:
     issuer: "https://decsis-eci/blueprints"
-    token-ttl-seconds: 3600
+    token-ttl-seconds: 10
