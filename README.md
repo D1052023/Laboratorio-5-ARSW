@@ -127,6 +127,8 @@ src/main/resources/
 
 5. Documentar en Swagger los endpoints de autenticación y de negocio.
 
+    [📄 Ver documentación (PDF)](doc/punto5.pdf)
+
 ---
 
 ## Lecturas recomendadas

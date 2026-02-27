@@ -2,12 +2,18 @@ package co.edu.eci.blueprints.auth;
 
 import co.edu.eci.blueprints.security.InMemoryUserService;
 import co.edu.eci.blueprints.security.RsaKeyProperties;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.Map;
+
+@Tag(name = "Autenticación", description = "Operaciones relacionadas con la generación de tokens JWT")
 
 @RestController
 @RequestMapping("/auth")
@@ -23,9 +29,17 @@ public class AuthController {
         this.props = props;
     }
 
-    public record LoginRequest(String username, String password) {}
-    public record TokenResponse(String access_token, String token_type, long expires_in) {}
+    public record LoginRequest(String username, String password) {
+    }
 
+    public record TokenResponse(String access_token, String token_type, long expires_in) {
+    }
+
+    @Operation(summary = "Iniciar sesión", description = "Valida las credenciales del usuario y genera un token JWT firmado")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Autenticación exitosa, token generado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Credenciales inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         if (!userService.isValid(req.username(), req.password())) {
@@ -37,12 +51,11 @@ public class AuthController {
         Instant exp = now.plusSeconds(ttl);
 
         String scope;
-        if(req.username().equals("admin")){
+        if (req.username().equals("admin")) {
             scope = "blueprints.read blueprints.write users.admin reports.read";
-        }else{
+        } else {
             scope = "blueprints.read";
         }
-
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer(props.issuer())
